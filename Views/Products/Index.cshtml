@@ -1,0 +1,67 @@
+﻿@model  PagedList.IPagedList<WebAppFirst.Models.Product>
+@using PagedList.Mvc;  
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Tuotelistaus";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Luo uusi", "Create")
+</p>
+@using (Html.BeginForm("Index", "Products", FormMethod.Get))
+{
+    <div class="input-group">
+        <p class="px-1">@Html.Label("Etsi nimellä: ")</p>
+        <p class="px-1">@Html.TextBox("SearchString1", ViewBag.currentFilter1 as string, new { @class = "form-control" })
+        <p class="px-1"><input type="submit" value="Search" class="form-control"></p>
+    </div>
+}
+<table class="table">
+    <tr>
+        <th>@Html.ActionLink("Tuotteen nimi", "Index", new { sortOrder = ViewBag.ProductNameSortParm })</th>
+        <th>Pakkaus Yksikkö Määrä</th>
+        <th>@Html.ActionLink("Hinta", "Index", new { sortOrder = ViewBag.UnitPriceSortParm })</th>
+        <th>Saldo</th>
+        <th>Units in order</th>
+        <th>Reorder point</th>
+        <th>Discontinued</th>
+        <th>Image</th>
+        <th>Category</th>
+        <th>Supplier name</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.ProductName)</td>
+            <td>@Html.DisplayFor(modelItem => item.QuantityPerUnit)</td>
+            <td>@Html.DisplayFor(modelItem => item.UnitPrice)</td>
+            <td>@Html.DisplayFor(modelItem => item.UnitsInStock)</td>
+            <td>@Html.DisplayFor(modelItem => item.UnitsOnOrder)</td>
+            <td>@Html.DisplayFor(modelItem => item.ReorderLevel)</td>
+            <td>@Html.DisplayFor(modelItem => item.Discontinued)</td>
+            <td>@Html.DisplayFor(modelItem => item.ImageLink)</td>
+            <td>@Html.DisplayFor(modelItem => item.Category.CategoryName)</td>
+            <td>@Html.DisplayFor(modelItem => item.Supplier.CompanyName)</td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new
+                {
+                    id = item.ProductID
+                    }) |
+                @Html.ActionLink("Details", "Details", new
+                {
+                    id = item.ProductID
+    }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ProductID })
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter1 = ViewBag.currentFilter1 })) 

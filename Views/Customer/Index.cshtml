@@ -1,0 +1,57 @@
+﻿@model IEnumerable<WebAppFirst.Models.Customer>
+@{
+    ViewBag.Title = "Index";
+}
+@section scripts {
+    <script type="text/javascript">
+        $(function () {
+            $(".showCustomerId").click(function () {
+                var customerId = $(this).data("customerid");
+                alert(customerId);
+             });
+        });
+         $(function () {
+            $(".poistaAsiakas").click(function () {
+                var customerId = $(this).data("customerid");
+                alert("Poistetaan: " + customerId);
+             });
+        });
+    </script>
+}
+<h2>Northwind asiakkaat</h2>
+<h5>Asiakkaita on @Model.Count() kappaletta</h5>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Asiakas tunnus</th>
+            <th>Asiakkaan nimi</th>
+            <th>Osoite</th>
+            <th>Kaupunki</th>
+            <th>Maa</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (WebAppFirst.Models.Customer cust in Model)
+        {
+        <tr>
+            <td>@cust.CustomerID</td>
+            <td>@cust.CompanyName</td>
+            <td>@cust.Address</td>
+            <td>@cust.City</td>
+            <td>@cust.Country</td>
+            <td><button class="btn btn-success" onclick='naytaValittuAsiakas("@cust.CompanyName")'><img src="~/Icons/battery.svg" alt="ASP.NET" width="16" height="16" />Muokkaa</button></td>
+            <!--  <td><a href="https://asp.net" class="btn btn-primary btn-lg"><img src="~/Icons/battery.svg" alt="ASP.NET" width="32" height="32" title="ASP.NET"> ASP.NET-sivut</a></td>-->
+            <td><button class="btn btn-primary showCustomerId" data-customerID="@cust.CustomerID">HuiHai</button></td>
+            <!-- Seuraava rivi toimii vain ensimmäisellä nimikkeellä koska id ei ole uniikki-->
+            <td><button class="btn btn-danger poistaAsiakas" data-customerID="@cust.CustomerID">Poista</button></td>
+            <!--<td><a href="https://asp.net"><img src="~/Icons/x-octagon-fill.svg" alt="ASP.NET" width="32" height="32" title="Poista">Poista</a></td>-->
+           <td><a href="https://asp.net" class="btn btn-primary btn-lg"><img src="~/Icons/star.svg" alt="ASP.NET" width="16" height="16" title="Kukkoo">Kukkuu</a></td>
+        </tr>
+            }
+        </tbody>
+    </table>
+    <script>
+        function naytaValittuAsiakas(AsiakasNimi) {
+            alert(AsiakasNimi);
+        }
+    </script>

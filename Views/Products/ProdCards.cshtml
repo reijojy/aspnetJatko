@@ -1,0 +1,27 @@
+﻿@model IEnumerable<WebAppFirst.Models.Product>
+
+@{
+    ViewBag.Title = "ProdCards";
+}
+
+<h2>ProdCards</h2>
+
+
+<div class="container-fluid">
+
+    @foreach (var tuote in Model)
+    {
+        <div class="col-lg-3">
+            <div class="card mb-3">
+                <h5 class="card-title">@tuote.ProductName</h5>
+                <img style="height: 200px; display: block;" src="@tuote.ImageLink" alt="Kuva" />
+                <p>Tuotteen hinta: @tuote.UnitPrice</p><p>Varastomäärä: @tuote.UnitsInStock</p>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">@tuote.UnitPrice</li>
+                    <li class="list-group-item">@tuote.UnitsOnOrder</li>
+                    <li class="list-group-item">@tuote.ReorderLevel</li>
+                </ul>
+              </div>
+        </div>
+    }
+</div>

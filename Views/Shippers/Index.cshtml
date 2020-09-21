@@ -1,0 +1,34 @@
+﻿@model IEnumerable<WebAppFirst.Models.Shipper>
+
+@{
+    ViewBag.Title = "Shippers";
+}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+          crossorigin="anonymous">
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-striped">
+    <tr>
+        <th>@Html.DisplayNameFor(model => model.CompanyName)</th>
+        <th>@Html.DisplayNameFor(model => model.Phone)</th>
+        <th>@Html.DisplayNameFor(model => model.Region.RegionDescription)</th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>@Html.DisplayFor(modelItem => item.CompanyName)</td>
+        <td>@Html.DisplayFor(modelItem => item.Phone)</td>
+        <td>@Html.DisplayFor(modelItem => item.Region.RegionDescription)</td>
+        <td>
+            <a class="fas fa-edit fa-1x" title="Muokkaa" href="~/Shippers/Edit/@item.ShipperID"></a>
+            <a class="fas fa-info fa-1x" title="Katso" href="~/Shippers/Details/@item.ShipperID"></a>
+            <a class="fas fa-trash fa-1x" title="Poista" href="~/Shippers/Delete/@item.ShipperID"></a>
+        </td>
+        </tr>
+    }
+
+    </table>
