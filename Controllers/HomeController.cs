@@ -52,19 +52,22 @@ namespace WebAppFirst.Controllers
                 ViewBag.LoggedStatus = "In";
                 Session["UserName"] = LoggedUser.UserName;
                 Session["LoggedStatus"] = "In";
+                ViewBag.LoginError = 0;
                 //return View("Login", LoginModel);
                 return RedirectToAction("Index", "Home"); //Tässä määritellään mihin onnistunut kirjautuminen johtaa --> Home/Index 
             } else {
                 ViewBag.LoginMessage = "Login unsuccessfull";
                 ViewBag.LoggedStatus = "Out";
+                ViewBag.LoginError = 1;
                 Session["LoggedStatus"] = "Out";
                 LoginModel.LoginErrorMessage = "Tuntematon käyttäjätunnus tai salasana."; 
-                return View("Login", LoginModel); } 
+                return View("Index", LoginModel); } 
         }
         public ActionResult LogOut()
         {
             Session.Abandon();
             ViewBag.LoggedStatus = "Out";
+            ViewBag.LoginError = 0;
             return RedirectToAction("Index", "Home"); //Uloskirjautumisen jälkeen pääsivulle
         }
         }
