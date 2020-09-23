@@ -3,11 +3,21 @@
 @{
     ViewBag.Title = "Home Page";
 }
-
+@*JQuery, joka suoritetaan aina, kun sivu latautuu*@
+@section scripts {
+<script type="text/javascript">
+    $(window).on('load', function () {
+        if (@ViewBag.LoginError == 1) {
+            alert("Kirjautuminen epäonnistui")
+            $('#loginForm').modal('show');
+        }
+    });
+</script>
+}
 <div class="jumbotron">
     <h1>Northwind demo sovellus</h1>
     <p class="lead">Tämä on Northwind harjoitus / Jyrki Reijonen</p>
-    <p>Logged.Status on @(ViewBag.Message)</p>
+    <p>Logged.Status on @(ViewBag.LoggedStatus)</p>
 
     <p>Nyt on @DateTime.Now</p>
     <p>Nyt on @DateTime.Now.ToString(new CultureInfo("en-US"))</p>
@@ -20,21 +30,21 @@
                 </div>
 
                 <div class="modal-body">
-                    <p>Kirjautuminen järjestelmään työn alla</p>
+                    <p>Kirjaudu Järjestelmään</p>
                     @using (Html.BeginForm("Authorize", "Home", FormMethod.Post, new { id="loginForm" }))
                     {
-                        @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-                        @Html.LabelFor(model => model.PassWord, htmlAttributes: new { @class = "control-label col-md-2" })
-                        @Html.EditorFor(model => model.PassWord, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                    @Html.LabelFor(model => model.PassWord, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.EditorFor(model => model.PassWord, new { htmlAttributes = new { @class = "form-control" } })
                     }
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary" form="loginForm"><i class="fas fa-check"></i></button>
                     <a href="@Url.Action("Index", "Home")" class="btn btn-primary"><i class="fas fa-times"></i></a>
                 </div>
-             </div>
+            </div>
         </div>
     </div>
 </div>
