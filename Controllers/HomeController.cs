@@ -11,6 +11,7 @@ namespace WebAppFirst.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.LoginError = 0;
             if (Session["LoggedStatus"] != null)
             {
                 ViewBag.LoggedStatus = Session["LoggedStatus"];
